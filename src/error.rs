@@ -15,9 +15,17 @@ pub enum ErrorKind {
     #[error("config error")]
     Config,
 
+    /// Git errors
+    #[error("git error")]
+    Git,
+
     /// Input/output error
     #[error("I/O error")]
     Io,
+
+    /// RustSec crate errors
+    #[error("RustSec error")]
+    RustSec,
 }
 
 impl ErrorKind {
@@ -51,9 +59,21 @@ impl From<Context<ErrorKind>> for Error {
     }
 }
 
+impl From<git2::Error> for Error {
+    fn from(other: git2::Error) -> Self {
+        ErrorKind::Git.context(other).into()
+    }
+}
+
 impl From<io::Error> for Error {
     fn from(other: io::Error) -> Self {
         ErrorKind::Io.context(other).into()
+    }
+}
+
+impl From<rustsec::Error> for Error {
+    fn from(other: rustsec::Error) -> Self {
+        ErrorKind::RustSec.context(other).into()
     }
 }
 

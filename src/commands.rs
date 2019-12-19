@@ -1,10 +1,11 @@
 //! `rustsec-admin` CLI subcommands
 
 mod lint;
+mod publish;
 mod version;
 mod web;
 
-use self::{lint::LintCmd, version::VersionCmd, web::WebCmd};
+use self::{lint::LintCmd, publish::PublishCmd, version::VersionCmd, web::WebCmd};
 use crate::config::AppConfig;
 use abscissa_core::{Command, Configurable, Help, Options, Runnable};
 use std::path::PathBuf;
@@ -23,6 +24,10 @@ pub enum AdminCmd {
     /// The `help` subcommand
     #[options(help = "get usage information")]
     Help(Help<Self>),
+
+    /// The `publish` subcommand
+    #[options(help = "publish an advisory from a PR")]
+    Publish(PublishCmd),
 
     /// The `version` subcommand
     #[options(help = "display version information")]

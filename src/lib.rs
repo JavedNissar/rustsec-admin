@@ -11,4 +11,5 @@ pub mod config;
 pub mod error;
 pub mod linter;
 pub mod prelude;
+pub mod pull_request;
 pub mod web;
